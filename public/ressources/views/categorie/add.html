@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+</head>
+<body>
+ <form class="row g-3" novalidate id="addPost">
+  <div class="col-md-4">
+    <label for="validationDefault01" class="form-label">Libelle</label>
+    <input type="text" class="form-control" name="libelle" id="libelle" value="">
+  </div>
+
+  <div class="col-md-3" style="margin-top: 48px;">
+    <button class="btn btn-dark" type="submit">Enregistrer</button>
+  </div>
+</form>
+</body>
+</html>
+
+<script>
+ document.getElementById('addPost').addEventListener('submit', getPosts);
+
+function getPosts(e) {
+  e.preventDefault();
+  let libelle = document.getElementById('libelle').value;
+  fetch("http://localhost:8000/api/categorie", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        libelle: libelle
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+
+}
+</script>

@@ -1,0 +1,19 @@
+{
+    "name": "dell/php_poo_mvc_gestion_atelier_221-main",
+    "description": "GA v2",
+    "autoload": {
+        "psr-4": {
+            "App\\Models\\": "models/",
+            "App\\Controllers\\": "controllers/",
+            "App\\Core\\": "core/",
+            "App\\Controllers\\Api": "controllers/api/"
+        }
+    },
+    "authors": [
+        {
+            "name": "CHEIKH IBRA MBENGUE",
+            "email": "Cheikhibrambengue90@gmail.com"
+        }
+    ],
+    "require": {}
+}
