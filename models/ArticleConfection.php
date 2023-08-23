@@ -23,7 +23,8 @@ class ArticleConfection extends Model
     private  Fournisseur $fournisseurModel;
     public function __construct()
     {
-        $this->categorieModel = new Fournisseur();
+        $this->categorieModel = new Categorie();
+        $this->fournisseurModel = new Fournisseur();
     }
 
     //Navigabite   ManyToOne

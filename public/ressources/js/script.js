@@ -2,7 +2,6 @@ const photo = document.querySelector('#image');
 const libelle = document.getElementById('libelle');
 const prix = document.getElementById('prix');
 const categorie = document.getElementById('categorieSelect');
-const checkboxContainere = document.getElementById('checkboxContainer');
 const fournisseur = document.getElementById('fournisseur');
 const quantite = document.getElementById('quantite');
 const unite = document.getElementById('unite');

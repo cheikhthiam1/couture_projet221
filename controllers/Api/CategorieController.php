@@ -3,9 +3,11 @@
 namespace App\Controllers\Api;
 
 use App\Core\Session;
+use App\Models\Unite;
 use App\Core\Validator;
 use App\Core\Controller;
 use App\Models\Categorie;
+use App\Models\UniteCategorie;
 
 class CategorieController extends Controller
 {
@@ -44,18 +46,28 @@ class CategorieController extends Controller
      */
     public function store()
     {
-        $data = json_decode(file_get_contents('php://input'),true);
-    
-        Validator::isVide($data["libelle"], "libelle");
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        Validator::isVide($data["libelle1"], "libelle");
+        Validator::isVide($data["unitedefaut"], "unite_libelle");
         if (Validator::validate()) {
+
             try {
-                Categorie::create([
-                    "libelle" => $data["libelle"]
+                $categorie = Categorie::create([
+                    "libelle" => $data["libelle1"]
+                ]);
+                $unite = Unite::create([
+                    "unite_libelle" => $data["unitedefaut"],
+                    "conversion" => $data["conversion"]
+                ]);
+                UniteCategorie::create([
+                    'idCategorie' => $categorie->id,
+                    "idUnite" => $unite->id
                 ]);
             } catch (\PDOException $th) {
                 Validator::$errors['libelle'] = "le libelle existe deja";
                 // die($th->getMessage());
             }
+        }
     }
-}
 }

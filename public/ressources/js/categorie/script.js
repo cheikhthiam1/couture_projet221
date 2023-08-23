@@ -2,22 +2,45 @@ import { Api } from "./../core/api.js";
 import { WEB_URL } from "./../core/bootstrap.js";
 const fournisseur = document.getElementById("fournisseur");
 
-document.addEventListener('DOMContentLoaded', () => {
+
   const addCategorie = document.getElementById('categorie');
-  const libelle = document.getElementById('libelle');
-  addCategorie.onsubmit = async (e) => {
+  const categorieSelect = document.getElementById('categorieSelect');
+  const libelle1 = document.getElementById('libelle1');
+  const unitedefaut = document.getElementById('unitedefaut');
+  const conversion = document.getElementById('conversion');
+
+  document.getElementById('submitBtn').addEventListener('click', async (e) => {
     e.preventDefault();
-    const value = libelle.value.trim();
-    console.log(value);
+    const value = libelle1.value;
+    const value1 = unitedefaut.value.trim();
+    const value2 = conversion.value.trim();
+  
     try {
       // Your API call and form reset logic here
-      await Api.postData(`${WEB_URL}/categorieadd`, { libelle: value });
-    addCategorie.reset();
+      await Api.postData(`${WEB_URL}/categorieadd`, { libelle1: value, unitedefaut: value1, conversion: value2 });
+  
+      const newOption = document.createElement('option');
+      newOption.value = value;
+      newOption.textContent = value;
+      categorieSelect.appendChild(newOption);
+  
+      categorieSelect.value = value;
+      uniteSelect.removeAttribute('disabled');
+      addCategorie.reset();
+  
+      // Close the Bootstrap modal using its method
+      const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+      modal.hide();
+  
+      // Redirect the user after a short delay
+      setTimeout(() => {
+        window.location.href = 'http://localhost:8000/article_add';
+      }, 500); // Adjust the delay as needed
     } catch (error) {
       console.error('An error occurred:', error);
     }
-  };
-});
+  });
+   
 
 
 addFournisseur.onsubmit = async (e) => {

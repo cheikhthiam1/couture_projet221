@@ -1,11 +1,21 @@
-<div class="container mt-5 col-md-8">
-  <div class="card mt-5">
+<style>
+  .success-messagee {
+    color: green;
+  }
+
+  .error-messagee {
+    color: red;
+  }
+</style>
+<div class="container mt-18 col-md-8">
+  <div class="card mt-4">
     <div class="card-body bg-white">
       <h4 class="card-title"> Ajouter des Articles </h4>
       <form class="row gx-4 gy-3" novalidate id="addForm">
         <div class="col-md-6 position-relative formC">
           <label for="validationTooltip01" class="form-label">Libelle</label>
           <input type="text" name="libelle" class="form-control" id="libelle" value="">
+          <div id="feedbackMessage"></div>
           <small class="error-message">Error message</small>
         </div>
         <div class="col-md-6 position-relative formC">
@@ -16,7 +26,7 @@
 
         <div class="col-md-6 position-relative formCa">
           <label for="validationTooltip04" class="form-label">Categorie</label>
-          <select class="form-select" id="categorieSelect" name="categorieId">
+          <select class="form-select" id="categorieSelect" name="categorieId" onchange="updateCheckbox()">
             <option selected disabled value="">Selectionnez une categorie</option>
           </select>
           <small class="error-message">Error message</small>
@@ -43,11 +53,11 @@
           <small class="error-message">Error message</small>
         </div>
         <div id="checkboxContainere" class="checked"></div>
-        <a href="#" class="clickable-icon3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <span class="material-symbols-outlined plusf">
+        <!-- <a href="#" class="clickable-icon3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="material-symbols-outlined">
             add_circle
           </span>
-        </a>
+        </a> -->
 
         <div class="col-md-2 position-absolute formC quantite">
           <label for="validationTooltip02" class="form-label">Quantite</label>
@@ -56,7 +66,7 @@
         </div>
         <div class="col-md-4 position-absolute formC unite ms-n3">
           <label for="validationTooltip02" class="form-label">Unite</label>
-          <select class="form-select" id="uniteSelect">
+          <select class="form-select" id="uniteSelect" disabled>
             <option selected disabled value="">Selectionnez une unite</option>
           </select>
           <small class="error-message">Error message</small>
@@ -67,14 +77,37 @@
           </span>
         </a>
         <div class="col-12">
-          <button class="btn btn2 btn-dark" type="submit">Submit form</button>
+          <button class="btn btn2 btn-dark" type="submit" id="submit">Submit form</button>
         </div>
 
         <!-- <input type="hidden" name="path" value="store-article"> -->
       </form>
     </div>
   </div>
+  <div class="card mt-5">
+    <div class="card-body bg-light">
+      <h4 class="card-title">Liste des Articles </h4>
+      <div class="table-responsive">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Libelle</th>
+              <th scope="col">Prix</th>
+              <th scope="col">Quantite</th>
+              <th scope="col">Categorie</th>
+              <th scope="col">Fournisseur</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="categoryTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
+
 <!-- Categorie Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -83,16 +116,24 @@
         <h5 class="modal-title" id="staticBackdropLabel">Ajouter une categorie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form novalidate id="categorie">
+      <form>
         <div class="modal-body">
           <div class="mb-3">
             <label for="libelle" class="form-label">Libelle</label>
-            <input type="text" class="form-control" id="libelle">
+            <input type="text" class="form-control" id="libelle1">
+          </div>
+          <div class="col-md-8 mb-3">
+            <label for="libelle" class="form-label">Unite par defaut</label>
+            <input type="text" class="form-control" id="unitedefaut">
+          </div>
+          <div class="col-md-2 mb-3 position-absolute conversion">
+            <label for="libelle" class="form-label">Conversion</label>
+            <input type="text" class="form-control" id="conversion" value="1">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-primary">Enregistrer</button>
+          <button type="submit" id="submitBtn" class="btn btn-primary">Enregistrer</button>
         </div>
       </form>
     </div>
@@ -132,3 +173,13 @@
 <script src="<?= AssetJs("article.js") ?>"></script>
 <script src="<?= AssetJs("vente.js") ?>"></script>
 <script src="<?= AssetJs("fournisseur.js") ?>"></script>
+<script>
+  // Add event listener to the categorieSelect dropdown
+  categorieSelect.addEventListener('change', function() {
+    if (categorieSelect.value !== '') {
+      uniteSelect.removeAttribute('disabled'); // Enable uniteSelect
+    } else {
+      uniteSelect.setAttribute('disabled', 'disabled'); // Disable uniteSelect
+    }
+  });
+</script>

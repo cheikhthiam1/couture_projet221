@@ -11,6 +11,7 @@ export class Api{
    headers: {
      'Content-type': 'application/json'
    },
+   
    body: JSON.stringify(data)
  }); 
  }

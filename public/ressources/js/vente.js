@@ -1,35 +1,33 @@
-// const feedbackElement = document.getElementById("feedbackMessage");
-// const inputElement = document.getElementById("fournisseur");
-// const checkboxContainer = document.getElementById("checkboxContainer");
 
-// async function checkVenteExistence(fournisseur) {
-//   const response = await fetch("http://localhost:8000/api/fournisseur");
-//   const fournisseurs = await response.json();
 
-//   const fournisseurExists = fournisseurs.some(fournisseure => fournisseure.prenom === fournisseur);
 
-//   return fournisseurExists;
-// }
+const inputeElement = document.getElementById("libelle");
+const feedbackElement = document.getElementById("feedbackMessage");
 
-// inputElement.addEventListener("input", async (event) => {
-//   const fournisseur = event.target.value;
-//   const exists = await checkVenteExistence(fournisseur);
+async function checkVenteExistence(libelleVente) {
+    const response = await fetch("http://localhost:8000/api/article");
+    const ventes = await response.json();
 
-//   feedbackElement.textContent = exists ? "Supplier exists" : "Supplier doesn't exist";
-  
-//   // Clear previous checkboxes
-//   checkboxContainer.innerHTML = "";
+    const venteExists = ventes.some(vente => vente.libelle === libelleVente);
 
-//   if (exists) {
-//     const checkbox = document.createElement("input");
-//     checkbox.type = "checkbox";
-//     checkbox.name = "selectedSupplier";
-//     checkbox.value = fournisseur;
-    
-//     const label = document.createElement("label");
-//     label.textContent = fournisseur;
+    return venteExists;
+}
 
-//     checkboxContainer.appendChild(checkbox);
-//     checkboxContainer.appendChild(label);
-//   }
-// });
+inputeElement.addEventListener("input", async event => {
+    const enteredLibelle = event.target.value.trim();
+
+    if (enteredLibelle.length >=3) {
+        const venteExists = await checkVenteExistence(enteredLibelle);
+
+        if (venteExists) {
+            feedbackElement.textContent = `Ce libille existe deja.`;
+            feedbackElement.className = "success-messagee"; // Apply appropriate CSS class for success
+        } else {
+            feedbackElement.textContent = `Ce libelle n'existe pas.`;
+            feedbackElement.className = "error-messagee"; // Apply appropriate CSS class for error 
+        }
+    } else {
+        feedbackElement.textContent = "Veuiller saisir un libelle.";
+        feedbackElement.className = ""; // Clear the CSS class
+    }
+});
