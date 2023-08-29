@@ -9,7 +9,7 @@ class Database
     {
         try {
             if (self::$bdd == null) {
-                self::$bdd = new \PDO('mysql:host=127.0.0.1:3306;dbname=atelierprojet_221;charset=utf8', 'root', '');
+                self::$bdd = new \PDO('mysql:host=127.0.0.1:3306;dbname=atelier_couture_221;charset=utf8', 'root', '');
             }
             return self::$bdd;
         } catch (\Exception $th) {

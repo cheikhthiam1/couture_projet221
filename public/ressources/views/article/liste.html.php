@@ -11,6 +11,7 @@
                             <th scope="col">Prix Achat</th>
                             <th scope="col">Qte Stock</th>
                             <th scope="col">Categorie</th>
+                            <th scope="col">Photo</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>

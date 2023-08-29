@@ -15,9 +15,9 @@
 
 <body>
     <header>
-        <nav class=" navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+        <nav class=" navbar navbar-expand-sm navbar-primary bg-primary sticky-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Mbengue Confection</a>
+                <a class="navbar-brand" href="#">Teranga Confection</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID" aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

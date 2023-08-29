@@ -47,25 +47,32 @@ class ArticleConfectionController extends Controller
  public function store()
  {
   $data = json_decode(file_get_contents('php://input'), true);
-  Validator::isVide($data["libelle"], "libelle");
-  Validator::isNumeric($data["prixAchat"], "prixAchat");
-  // Validator::isNumeric($_POST["qteStock"],"qteStock");
+  Validator::isNumeric($data["prix"], "prixAchat");
+
   if (Validator::validate()) {
    try {
+    $imagePath = ""; // Placeholder for image path or filename
+
+    // Handle image upload
+    if (isset($_FILES['image'])) {
+     $uploadDir = 'image/uploaded_images/';
+     $imageName = $_FILES['image']['name'];
+     $imagePath = $uploadDir . $imageName;
+     move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+    }
+
     ArticleConfection::create([
-     "libelle" => $data["libelle"],
-     "qteStock" => $data["qteStock"],
-     "prixAchat" => $data["prixAchat"],
-     "categorieId" => $data["categorieId"],
-     "fournisseurId" => $data["fournisseurId"],
+     "libelle" => $data["libelle2"],
+     "qteStock" => $data["quantite"],
+     "prixAchat" => $data["prix"],
+     "photo" => $imagePath,
+     "reference" => $data["reference"],
+     "idCategorie" => $data["categorieSelect"],
+     "idFournisseur" => $data["fournisseur"]
     ]);
    } catch (\PDOException $th) {
     Validator::$errors['libelle'] = "le libelle existe deja";
    }
-   $this->redirect("article");
-  } else {
-   Session::set("errors", Validator::$errors);
-   $this->redirect("article_add");
   }
  }
 }
